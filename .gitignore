@@ -1,0 +1,12 @@
+node_modules/
+dist/
+out/
+.DS_Store
+*.log
+**/.vercel/
+certs/
+scripts/
+build/entitlements.mac.plist
+*.png.bak
+Capture d*
+.env*

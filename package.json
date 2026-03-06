@@ -1,0 +1,48 @@
+{
+  "name": "fleeble",
+  "version": "1.0.0",
+  "description": "Cute mascot that appears when AI tools need human intervention",
+  "main": "main.js",
+  "bin": {
+    "mascot": "./cli.js"
+  },
+  "scripts": {
+    "start": "electron .",
+    "send": "node cli.js",
+    "build": "electron-builder --mac -c.mac.identity=null -c.afterSign=",
+    "build:signed": "electron-builder --mac",
+    "build:dir": "electron-builder --mac --dir"
+  },
+  "build": {
+    "appId": "com.fleeble.app",
+    "productName": "Fleeble",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "build/icon.icns",
+      "target": "dmg",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "afterSign": "scripts/notarize.js",
+    "files": [
+      "main.js",
+      "cli.js",
+      "preload.js",
+      "preload-bubble.js",
+      "preload-menu.js",
+      "renderer/**/*",
+      "hooks/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    }
+  },
+  "author": "Fleeble",
+  "devDependencies": {
+    "@electron/notarize": "^3.1.1",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  }
+}
