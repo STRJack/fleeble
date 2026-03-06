@@ -111,3 +111,12 @@
   from { opacity: 0; transform: translateY(-8px) scale(0.96); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* ===== BACKGROUND FLEEBLES ===== */
+@keyframes bg-fleeble-drift {
+  0%   { transform: translateY(0) rotate(0deg); }
+  25%  { transform: translateY(-18px) rotate(5deg); }
+  50%  { transform: translateY(-8px) rotate(-3deg); }
+  75%  { transform: translateY(-22px) rotate(4deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}

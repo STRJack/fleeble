@@ -1,46 +1,105 @@
 export default function MascotMini() {
   return (
     <div
-      className="relative w-10 h-12 shrink-0"
-      style={{ animation: 'mini-float 3s ease-in-out infinite' }}
+      className="relative shrink-0"
+      style={{ width: '40px', height: '48px', animation: 'mini-float 3s ease-in-out infinite' }}
     >
       {/* Antenna */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-2.5 rounded"
-        style={{ background: 'var(--accent)' }}
+        className="absolute rounded"
+        style={{
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '2px',
+          height: '10px',
+          background: 'var(--accent)',
+        }}
       >
         <div
-          className="absolute -top-1 left-1/2 -translate-x-1/2 w-[7px] h-[7px] rounded-full"
-          style={{ background: 'var(--accent-tip)' }}
+          className="absolute rounded-full"
+          style={{
+            top: '-4px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '7px',
+            height: '7px',
+            background: 'var(--accent-tip)',
+          }}
         />
       </div>
       {/* Body */}
       <div
-        className="absolute top-2.5 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full"
-        style={{ background: 'linear-gradient(165deg, var(--accent-light) 0%, var(--accent) 40%, var(--accent-dark) 100%)' }}
+        className="absolute rounded-full"
+        style={{
+          top: '10px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '32px',
+          height: '32px',
+          background: 'linear-gradient(165deg, var(--accent-light) 0%, var(--accent) 40%, var(--accent-dark) 100%)',
+        }}
       >
-        {/* Eyes */}
-        <div className="absolute top-[9px] left-[6px] w-2 h-2 rounded-full bg-white overflow-hidden">
+        {/* Left eye */}
+        <div
+          className="absolute bg-white rounded-full overflow-hidden"
+          style={{ top: '9px', left: '6px', width: '8px', height: '8px' }}
+        >
           <div
-            className="absolute top-1/2 left-1/2 w-[4.5px] h-[4.5px] rounded-full"
-            style={{ background: '#1e1b4b', animation: 'look 5s ease-in-out infinite' }}
+            className="absolute rounded-full"
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -45%)',
+              width: '4.5px',
+              height: '4.5px',
+              background: '#1e1b4b',
+              animation: 'look 5s ease-in-out infinite',
+            }}
           />
         </div>
-        <div className="absolute top-[9px] right-[6px] w-2 h-2 rounded-full bg-white overflow-hidden">
+        {/* Right eye */}
+        <div
+          className="absolute bg-white rounded-full overflow-hidden"
+          style={{ top: '9px', right: '6px', width: '8px', height: '8px' }}
+        >
           <div
-            className="absolute top-1/2 left-1/2 w-[4.5px] h-[4.5px] rounded-full"
-            style={{ background: '#1e1b4b', animation: 'look 5s ease-in-out infinite' }}
+            className="absolute rounded-full"
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -45%)',
+              width: '4.5px',
+              height: '4.5px',
+              background: '#1e1b4b',
+              animation: 'look 5s ease-in-out infinite',
+            }}
           />
         </div>
       </div>
-      {/* Arms */}
+      {/* Left arm */}
       <div
-        className="absolute top-7 left-[1px] w-[7px] h-2 rounded-full rotate-[15deg]"
-        style={{ background: 'var(--accent-dark)' }}
+        className="absolute rounded-full"
+        style={{
+          top: '28px',
+          left: '1px',
+          width: '7px',
+          height: '8px',
+          background: 'var(--accent-dark)',
+          transform: 'rotate(15deg)',
+        }}
       />
+      {/* Right arm */}
       <div
-        className="absolute top-7 right-[1px] w-[7px] h-2 rounded-full -rotate-[15deg]"
-        style={{ background: 'var(--accent-dark)' }}
+        className="absolute rounded-full"
+        style={{
+          top: '28px',
+          right: '1px',
+          width: '7px',
+          height: '8px',
+          background: 'var(--accent-dark)',
+          transform: 'rotate(-15deg)',
+        }}
       />
     </div>
   );

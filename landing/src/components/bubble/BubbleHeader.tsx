@@ -24,23 +24,45 @@ export default function BubbleHeader({ source, type, project }: Props) {
   const typeStyle = TYPE_STYLES[type];
 
   return (
-    <div className="flex gap-2 items-center mb-3">
+    <div className="flex items-center" style={{ gap: '5px', marginBottom: '8px' }}>
       <span
-        className="text-[11px] font-bold uppercase tracking-wider text-white py-1 px-2.5 rounded-full"
-        style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-darker))' }}
+        className="text-white font-bold uppercase"
+        style={{
+          fontSize: '8px',
+          letterSpacing: '0.6px',
+          background: 'linear-gradient(135deg, var(--accent), var(--accent-darker))',
+          padding: '3px 7px',
+          borderRadius: '12px',
+        }}
       >
         {SOURCE_LABELS[source] || source}
       </span>
       <span
-        className="text-[11px] font-semibold uppercase tracking-wide py-1 px-2.5 rounded-full"
-        style={{ background: typeStyle.bg, color: typeStyle.color }}
+        className="font-semibold uppercase"
+        style={{
+          fontSize: '8px',
+          letterSpacing: '0.4px',
+          background: typeStyle.bg,
+          color: typeStyle.color,
+          padding: '3px 7px',
+          borderRadius: '12px',
+        }}
       >
         {typeStyle.label}
       </span>
       {project && (
         <span
-          className="text-[11px] font-semibold tracking-wide py-1 px-2.5 rounded-full ml-auto max-w-[140px] truncate"
-          style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(var(--card-text-rgb), 0.5)' }}
+          className="font-semibold truncate"
+          style={{
+            fontSize: '8px',
+            letterSpacing: '0.3px',
+            background: 'rgba(255,255,255,0.06)',
+            color: 'rgba(var(--card-text-rgb), 0.5)',
+            padding: '3px 7px',
+            borderRadius: '12px',
+            marginLeft: 'auto',
+            maxWidth: '100px',
+          }}
         >
           {project}
         </span>

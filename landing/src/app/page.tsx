@@ -2,6 +2,7 @@
 
 import { useTheme } from '@/hooks/useTheme';
 import Particles from '@/components/ui/Particles';
+import BackgroundFleebles from '@/components/ui/BackgroundFleebles';
 import ThemePicker from '@/components/ui/ThemePicker';
 import HeroSection from '@/components/sections/HeroSection';
 import DemoSection from '@/components/sections/DemoSection';
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <>
       <Particles />
+      <BackgroundFleebles />
       <ThemePicker currentTheme={themeName} onThemeChange={applyTheme} />
       <main>
         <HeroSection />

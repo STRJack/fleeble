@@ -1,3 +1,265 @@
+'use client';
+
+/* ===== CONFIG LABEL ===== */
+function ConfigLabel({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div
+      className="flex items-center font-bold uppercase"
+      style={{ fontSize: '10px', letterSpacing: '0.8px', color: '#5e596e', marginBottom: '8px', gap: '6px' }}
+    >
+      {icon}
+      {children}
+    </div>
+  );
+}
+
+/* ===== POSITION PICKER ===== */
+function PositionPicker() {
+  const corners = [
+    { pos: 'top-left', align: 'items-start justify-start' },
+    { pos: 'top-right', align: 'items-start justify-end', active: true },
+    { pos: 'bottom-left', align: 'items-end justify-start' },
+    { pos: 'bottom-right', align: 'items-end justify-end' },
+  ];
+
+  return (
+    <div className="flex justify-center">
+      <div
+        className="relative grid"
+        style={{
+          width: '160px',
+          height: '100px',
+          borderRadius: '8px',
+          border: '1.5px solid rgba(255,255,255,0.06)',
+          background: 'rgba(255,255,255,0.04)',
+          gridTemplateColumns: '1fr 1fr',
+          gridTemplateRows: '1fr 1fr',
+          padding: '6px',
+          overflow: 'hidden',
+        }}
+      >
+        {corners.map((c) => (
+          <button
+            key={c.pos}
+            className={`border-none bg-transparent cursor-pointer flex ${c.align} transition-all duration-150`}
+            style={{ padding: '4px', borderRadius: '4px' }}
+          >
+            <span
+              style={{
+                display: 'block',
+                width: '12px',
+                height: '12px',
+                borderRadius: '4px',
+                background: c.active ? 'var(--accent)' : 'rgba(255,255,255,0.08)',
+                border: c.active ? '1.5px solid var(--accent)' : '1.5px solid rgba(255,255,255,0.1)',
+                boxShadow: c.active ? '0 0 10px rgba(var(--accent-rgb), 0.5)' : 'none',
+                transform: c.active ? 'scale(1.1)' : 'scale(1)',
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+            />
+          </button>
+        ))}
+        <span
+          className="absolute pointer-events-none font-semibold uppercase"
+          style={{
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '9px',
+            letterSpacing: '1px',
+            color: '#5e596e',
+          }}
+        >
+          Screen
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ===== AUTO-DISMISS SLIDER ===== */
+function DismissSlider() {
+  const value = 30;
+  const fill = ((value - 5) / 115) * 100;
+
+  return (
+    <div>
+      <div className="flex items-center justify-between" style={{ marginBottom: '8px' }}>
+        <ConfigLabel
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          }
+        >
+          Auto-dismiss
+        </ConfigLabel>
+        <span
+          className="font-bold"
+          style={{
+            fontSize: '11px',
+            color: 'var(--accent)',
+            background: 'rgba(var(--accent-rgb), 0.15)',
+            padding: '2px 8px',
+            borderRadius: '6px',
+            fontFamily: "'SF Mono', 'Menlo', monospace",
+          }}
+        >
+          {value}s
+        </span>
+      </div>
+      <div className="relative flex items-center" style={{ height: '20px' }}>
+        <div
+          style={{
+            width: '100%',
+            height: '4px',
+            background: 'rgba(255,255,255,0.06)',
+            borderRadius: '4px',
+            position: 'relative',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              height: '4px',
+              width: `${fill}%`,
+              background: 'linear-gradient(90deg, var(--accent), var(--accent-light))',
+              borderRadius: '4px',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: `${fill}%`,
+              transform: 'translate(-50%, -50%)',
+              width: '16px',
+              height: '16px',
+              borderRadius: '50%',
+              background: 'var(--accent)',
+              boxShadow: '0 0 0 3px rgba(var(--accent-rgb), 0.2), 0 2px 8px rgba(0,0,0,0.3)',
+            }}
+          />
+        </div>
+      </div>
+      <div className="flex justify-between" style={{ marginTop: '4px', fontSize: '9px', color: '#5e596e', fontFamily: "'SF Mono', 'Menlo', monospace" }}>
+        <span>5s</span>
+        <span>60s</span>
+        <span>120s</span>
+      </div>
+    </div>
+  );
+}
+
+/* ===== SOUND PICKER ===== */
+function SoundPicker() {
+  const sounds = [
+    { name: 'Bubble Pop', selected: true },
+    { name: 'Soft Chime', selected: false },
+    { name: 'None', selected: false },
+  ];
+
+  return (
+    <div className="flex flex-col" style={{ gap: '4px' }}>
+      {sounds.map((s) => (
+        <div
+          key={s.name}
+          className="flex items-center cursor-pointer transition-all duration-150"
+          style={{
+            gap: '8px',
+            padding: '7px 10px',
+            borderRadius: '8px',
+            background: s.selected ? 'rgba(var(--accent-rgb), 0.15)' : 'rgba(255,255,255,0.04)',
+            border: s.selected ? '1px solid rgba(var(--accent-rgb), 0.4)' : '1px solid rgba(255,255,255,0.06)',
+          }}
+        >
+          <div
+            className="flex items-center justify-center shrink-0"
+            style={{
+              width: '22px',
+              height: '22px',
+              borderRadius: '6px',
+              background: s.selected ? 'var(--accent)' : 'rgba(255,255,255,0.04)',
+              border: s.selected ? '1px solid var(--accent)' : '1px solid rgba(255,255,255,0.06)',
+              color: s.selected ? 'white' : '#5e596e',
+            }}
+          >
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              {s.name === 'None' ? (
+                <>
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </>
+              ) : (
+                <>
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                </>
+              )}
+            </svg>
+          </div>
+          <span
+            style={{
+              fontSize: '12px',
+              fontWeight: s.selected ? 600 : 500,
+              color: s.selected ? '#f1f0f5' : '#a09cb0',
+              flex: 1,
+            }}
+          >
+            {s.name}
+          </span>
+          {s.name !== 'None' && (
+            <button
+              className="flex items-center justify-center border-none bg-transparent cursor-pointer transition-all duration-150"
+              style={{ width: '22px', height: '22px', borderRadius: '50%', color: '#5e596e' }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ===== DND TOGGLE ===== */
+function DndToggle() {
+  return (
+    <div className="flex items-center justify-between" style={{ marginBottom: '8px' }}>
+      <ConfigLabel
+        icon={
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        }
+      >
+        Do Not Disturb
+      </ConfigLabel>
+      <button
+        className="font-semibold cursor-pointer transition-all duration-200"
+        style={{
+          padding: '5px 14px',
+          borderRadius: '20px',
+          border: '1px solid rgba(255,255,255,0.06)',
+          background: 'rgba(255,255,255,0.04)',
+          color: '#5e596e',
+          fontSize: '11px',
+          fontFamily: 'inherit',
+        }}
+      >
+        Off
+      </button>
+    </div>
+  );
+}
+
+/* ===== INTEGRATIONS ===== */
 const integrations = [
   {
     name: 'Claude Code',
@@ -6,7 +268,7 @@ const integrations = [
     iconBg: 'linear-gradient(135deg, rgba(217, 119, 87, 0.2), rgba(217, 119, 87, 0.08))',
     iconColor: '#d97757',
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z" />
       </svg>
     ),
@@ -18,7 +280,7 @@ const integrations = [
     iconBg: 'linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 102, 255, 0.08))',
     iconColor: '#3b8eff',
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M22.106 5.68L12.5.135a.998.998 0 00-.998 0L1.893 5.68a.84.84 0 00-.419.726v11.186c0 .3.16.577.42.727l9.607 5.547a.999.999 0 00.998 0l9.608-5.547a.84.84 0 00.42-.727V6.407a.84.84 0 00-.42-.726zm-.603 1.176L12.228 22.92c-.063.108-.228.064-.228-.061V12.34a.59.59 0 00-.295-.51l-9.11-5.26c-.107-.062-.063-.228.062-.228h18.55c.264 0 .428.286.296.514z" />
       </svg>
     ),
@@ -30,54 +292,133 @@ const integrations = [
     iconBg: 'linear-gradient(135deg, rgba(16, 163, 127, 0.2), rgba(16, 163, 127, 0.08))',
     iconColor: '#10a37f',
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z" />
       </svg>
     ),
   },
 ];
 
+/* ===== CLI CODE BLOCK ===== */
+function CliCodeBlock() {
+  return (
+    <div
+      style={{
+        background: 'rgba(0,0,0,0.3)',
+        border: '1px solid rgba(255,255,255,0.06)',
+        borderRadius: '8px',
+        padding: '10px 12px',
+        fontFamily: "'SF Mono', 'Menlo', monospace",
+        fontSize: '11px',
+        lineHeight: 1.7,
+        overflowX: 'auto',
+      }}
+    >
+      <div style={{ whiteSpace: 'nowrap', color: '#a09cb0' }}>
+        <span style={{ color: '#22c55e', marginRight: '6px' }}>$</span>
+        <span>fleeble </span>
+        <span style={{ color: 'var(--accent)' }}>--start</span>
+      </div>
+      <div style={{ whiteSpace: 'nowrap', color: '#5e596e' }}>
+        # Start Fleeble daemon
+      </div>
+    </div>
+  );
+}
+
+/* ===== MAIN CONFIG ===== */
 export default function TrayMenuConfig() {
   return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <div className="flex items-center gap-2 mb-3 text-xs font-bold uppercase tracking-wider" style={{ color: '#5e596e' }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-          </svg>
+    <div className="flex flex-col" style={{ gap: '0' }}>
+      {/* Position */}
+      <div style={{ marginBottom: '18px' }}>
+        <ConfigLabel
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <line x1="3" y1="9" x2="21" y2="9" />
+              <line x1="9" y1="21" x2="9" y2="9" />
+            </svg>
+          }
+        >
+          Position
+        </ConfigLabel>
+        <PositionPicker />
+      </div>
+
+      {/* Auto-dismiss */}
+      <div style={{ marginBottom: '18px' }}>
+        <DismissSlider />
+      </div>
+
+      {/* Sound */}
+      <div style={{ marginBottom: '18px' }}>
+        <ConfigLabel
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            </svg>
+          }
+        >
+          Notification Sound
+        </ConfigLabel>
+        <SoundPicker />
+      </div>
+
+      {/* DND */}
+      <div style={{ marginBottom: '18px' }}>
+        <DndToggle />
+      </div>
+
+      {/* Integrations */}
+      <div style={{ marginBottom: '18px' }}>
+        <ConfigLabel
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+          }
+        >
           Integrations
-        </div>
-        <div className="flex flex-col gap-2">
+        </ConfigLabel>
+        <div className="flex flex-col" style={{ gap: '6px' }}>
           {integrations.map((int) => (
             <div
               key={int.name}
-              className="flex items-center justify-between p-3 px-4 rounded-xl"
+              className="flex items-center justify-between"
               style={{
+                padding: '10px 12px',
+                borderRadius: '10px',
                 background: 'rgba(255,255,255,0.04)',
                 border: '1px solid rgba(255,255,255,0.06)',
               }}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center" style={{ gap: '10px' }}>
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                  style={{ background: int.iconBg, color: int.iconColor }}
+                  className="flex items-center justify-center shrink-0"
+                  style={{ width: '32px', height: '32px', borderRadius: '8px', background: int.iconBg, color: int.iconColor }}
                 >
                   {int.icon}
                 </div>
                 <div>
-                  <div className="text-sm font-semibold" style={{ color: '#f1f0f5' }}>{int.name}</div>
-                  <div className="text-xs mt-0.5" style={{ color: int.connected ? '#22c55e' : '#5e596e' }}>
+                  <div className="font-semibold" style={{ fontSize: '12px', color: '#f1f0f5' }}>{int.name}</div>
+                  <div style={{ fontSize: '10px', color: int.connected ? '#22c55e' : '#5e596e', marginTop: '1px' }}>
                     {int.desc}
                   </div>
                 </div>
               </div>
               <button
-                className="py-2 px-4 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-150 whitespace-nowrap"
+                className="font-semibold cursor-pointer transition-all duration-150 whitespace-nowrap"
                 style={{
-                  background: int.connected ? 'rgba(34, 197, 94, 0.1)' : 'rgba(var(--accent-rgb), 0.15)',
+                  padding: '6px 14px',
+                  borderRadius: '7px',
                   border: int.connected ? '1px solid rgba(34, 197, 94, 0.2)' : '1px solid rgba(255,255,255,0.06)',
+                  background: int.connected ? 'rgba(34, 197, 94, 0.1)' : 'rgba(var(--accent-rgb), 0.15)',
                   color: int.connected ? '#22c55e' : 'var(--accent)',
+                  fontSize: '11px',
                 }}
               >
                 {int.connected ? 'Connected' : 'Connect'}
@@ -85,6 +426,21 @@ export default function TrayMenuConfig() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Quick Reference */}
+      <div style={{ marginBottom: '6px' }}>
+        <ConfigLabel
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <polyline points="4 17 10 11 4 5" />
+              <line x1="12" y1="19" x2="20" y2="19" />
+            </svg>
+          }
+        >
+          Quick Reference
+        </ConfigLabel>
+        <CliCodeBlock />
       </div>
     </div>
   );
