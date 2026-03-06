@@ -11,6 +11,7 @@ export function useGitHubRelease(): GitHubRelease {
   const [release, setRelease] = useState<GitHubRelease>({
     version: FALLBACK_VERSION,
     downloadUrl: FALLBACK_URL,
+    downloadCount: 0,
   });
 
   useEffect(() => {
@@ -21,9 +22,14 @@ export function useGitHubRelease(): GitHubRelease {
         const dmg = data.assets?.find((a: { name: string }) =>
           a.name.endsWith('.dmg')
         );
+        const totalDownloads = (data.assets || []).reduce(
+          (sum: number, a: { download_count: number }) => sum + (a.download_count || 0),
+          0
+        );
         setRelease({
           version,
           downloadUrl: dmg?.browser_download_url || FALLBACK_URL,
+          downloadCount: totalDownloads,
         });
       })
       .catch(() => {});

@@ -31,4 +31,5 @@ export interface BubbleScenario {
 export interface GitHubRelease {
   version: string;
   downloadUrl: string;
+  downloadCount: number;
 }
