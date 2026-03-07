@@ -5,7 +5,7 @@ import { GitHubRelease } from '@/types';
 
 const REPO = 'STRJack/fleeble';
 const FALLBACK_VERSION = 'v1.0.0';
-const FALLBACK_URL = `https://github.com/${REPO}/releases/latest/download/Fleeble-1.0.0-arm64.dmg`;
+const FALLBACK_URL = `https://github.com/${REPO}/releases/latest`;
 
 export function useGitHubRelease(): GitHubRelease {
   const [release, setRelease] = useState<GitHubRelease>({

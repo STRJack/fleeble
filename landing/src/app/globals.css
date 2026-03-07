@@ -34,14 +34,18 @@
     scroll-behavior: smooth;
     -webkit-user-select: none;
     user-select: none;
+    background-color: var(--bg1);
+    overscroll-behavior: none;
   }
 
   body {
     background: linear-gradient(170deg, var(--bg1) 0%, var(--bg2) 100%);
+    background-attachment: fixed;
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
     color: var(--card-text);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    min-height: 100vh;
   }
 }
 
