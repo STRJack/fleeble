@@ -26,7 +26,6 @@
       "entitlementsInherit": "build/entitlements.mac.plist",
       "notarize": false
     },
-    "afterSign": "scripts/notarize.js",
     "files": [
       "main.js",
       "main/**/*",
