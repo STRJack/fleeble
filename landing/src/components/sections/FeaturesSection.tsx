@@ -10,8 +10,61 @@ const features = [
         <path d="M13.73 21a2 2 0 0 1-3.46 0" />
       </svg>
     ),
-    title: 'Smart Notifications',
-    desc: 'Rich bubble notifications with auto-dismiss, markdown support, and interactive options.',
+    title: 'AI Notifications',
+    desc: 'Interactive bubbles for Claude Code, Cursor & Codex — approve actions, answer questions, all from the desktop.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+        <rect x="8" y="2" width="8" height="4" rx="1" />
+      </svg>
+    ),
+    title: 'Clipboard Manager',
+    desc: 'Full clipboard history with search, categories, image support & pinned favorites. Open with Cmd+Shift+V.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+    title: 'Pomodoro Timer',
+    desc: 'Focus/break cycles with a visual progress ring. The mascot announces each phase transition.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+    title: 'Approval Management',
+    desc: 'Approve or deny AI tool requests directly from notifications. No terminal switching needed.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <line x1="17" y1="10" x2="3" y2="10" />
+        <line x1="21" y1="6" x2="3" y2="6" />
+        <line x1="21" y1="14" x2="3" y2="14" />
+        <line x1="17" y1="18" x2="3" y2="18" />
+      </svg>
+    ),
+    title: 'Quick Notes',
+    desc: 'Jot down ideas from the tray menu. Auto-saved, searchable, always one click away.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d="M5 22h14" />
+        <path d="M5 2h14" />
+        <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+        <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+      </svg>
+    ),
+    title: 'Reminders & Timers',
+    desc: 'Set quick reminders — the mascot pops up when time is up. Snooze or dismiss in one click.',
   },
   {
     icon: (
@@ -26,11 +79,13 @@ const features = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
       </svg>
     ),
-    title: 'Approval Management',
-    desc: 'Approve or deny tool requests directly from notifications. No terminal switching needed.',
+    title: 'Custom Sounds',
+    desc: '8 notification sounds to choose from, or mute everything with Do Not Disturb mode.',
   },
   {
     icon: (
@@ -42,27 +97,6 @@ const features = [
     ),
     title: 'Multi-Display',
     desc: 'Choose which display shows notifications and position them in any corner.',
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-      </svg>
-    ),
-    title: 'Smart Grouping',
-    desc: 'Notifications auto-group by project with collapsible headers and counters.',
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-      </svg>
-    ),
-    title: 'Custom Sounds',
-    desc: 'Choose from multiple notification sounds or mute everything with Do Not Disturb.',
   },
 ];
 
@@ -91,7 +125,7 @@ export default function FeaturesSection() {
             Everything you need
           </h2>
           <p className="text-xl max-w-xl mx-auto leading-relaxed" style={{ color: 'rgba(var(--card-text-rgb), 0.5)' }}>
-            A polished, feature-rich experience designed for developers who use AI coding tools.
+            AI notifications, productivity tools, and a cute mascot — all packed into one lightweight menu bar app.
           </p>
         </motion.div>
 

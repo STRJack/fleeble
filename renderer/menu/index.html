@@ -37,20 +37,26 @@
       </div>
     </div>
 
-    <!-- ===== SEGMENTED CONTROL ===== -->
+    <!-- ===== SEGMENTED CONTROL (6 tabs, icon-only) ===== -->
     <div class="segmented-wrapper">
       <div class="segmented">
-        <button class="seg-btn active" data-tab="activity">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <span data-i18n="tab.activity">Activity</span>
+        <button class="seg-btn active" data-tab="activity" title="Activity">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </button>
-        <button class="seg-btn" data-tab="themes">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg>
-          <span data-i18n="tab.themes">Themes</span>
+        <button class="seg-btn" data-tab="clipboard" title="Clipboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
         </button>
-        <button class="seg-btn" data-tab="config">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Config
+        <button class="seg-btn" data-tab="timers" title="Timers">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </button>
+        <button class="seg-btn" data-tab="notes" title="Notes">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </button>
+        <button class="seg-btn" data-tab="themes" title="Themes">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="seg-btn" data-tab="config" title="Config">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </button>
         <div class="seg-indicator"></div>
       </div>
@@ -71,6 +77,116 @@
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
         <span data-i18n="clearAll">Clear all</span>
       </button>
+    </div>
+
+    <!-- ===== CLIPBOARD TAB ===== -->
+    <div class="tab-panel" id="panel-clipboard">
+      <div class="clipboard-panel">
+        <div class="clipboard-list" id="clipboard-list">
+          <div class="empty-state">
+            <div class="empty-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.3"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+            </div>
+            <span class="empty-text" data-i18n="clipboard.empty">Nothing copied yet</span>
+            <span class="empty-hint" data-i18n="clipboard.emptyHint">Copy something to see it here</span>
+          </div>
+        </div>
+        <button class="clipboard-open-btn" id="clipboard-open-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span data-i18n="clipboard.openFull">Open full clipboard</span>
+          <span class="shortcut-badge" data-i18n="clipboard.shortcut">Cmd+Shift+V</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== TIMERS TAB ===== -->
+    <div class="tab-panel" id="panel-timers">
+      <!-- Sub-tabs: Reminders / Pomodoro -->
+      <div class="sub-tabs">
+        <button class="sub-tab active" data-subtab="reminders" data-i18n="timers.reminders">Reminders</button>
+        <button class="sub-tab" data-subtab="pomodoro" data-i18n="timers.pomodoro">Pomodoro</button>
+      </div>
+
+      <!-- Reminders sub-panel -->
+      <div class="sub-panel active" id="subpanel-reminders">
+        <div class="reminder-input-row">
+          <input type="text" class="reminder-input" id="reminder-input" data-i18n-placeholder="timers.reminderPlaceholder" placeholder="Remind me to...">
+          <div class="reminder-durations">
+            <button class="dur-btn" data-delay="300000">5m</button>
+            <button class="dur-btn" data-delay="900000">15m</button>
+            <button class="dur-btn active" data-delay="1800000">30m</button>
+            <button class="dur-btn" data-delay="3600000">1h</button>
+          </div>
+        </div>
+        <div class="reminder-list" id="reminder-list">
+          <div class="empty-state small">
+            <span class="empty-text" data-i18n="timers.noReminders">No active reminders</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pomodoro sub-panel -->
+      <div class="sub-panel" id="subpanel-pomodoro">
+        <div class="pomodoro-ring-container">
+          <svg class="pomodoro-ring" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="52" fill="none" stroke-width="6"/>
+            <circle class="ring-progress" id="pomo-ring" cx="60" cy="60" r="52" fill="none" stroke-width="6" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="pomodoro-center">
+            <div class="pomo-time" id="pomo-time">25:00</div>
+            <div class="pomo-phase" id="pomo-phase" data-i18n="pomodoro.idle">Ready</div>
+          </div>
+        </div>
+        <div class="pomo-cycles" id="pomo-cycles">
+          <span class="cycle-dot"></span>
+          <span class="cycle-dot"></span>
+          <span class="cycle-dot"></span>
+          <span class="cycle-dot"></span>
+        </div>
+        <div class="pomo-controls">
+          <button class="pomo-btn secondary" id="pomo-reset-btn" data-i18n="pomodoro.reset">Reset</button>
+          <button class="pomo-btn primary" id="pomo-main-btn" data-i18n="pomodoro.start">Start</button>
+          <button class="pomo-btn secondary" id="pomo-skip-btn" data-i18n="pomodoro.skip">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== NOTES TAB ===== -->
+    <div class="tab-panel" id="panel-notes">
+      <!-- List view -->
+      <div id="notes-list-view">
+        <div class="notes-header-row">
+          <input type="text" class="notes-search" id="notes-search" data-i18n-placeholder="notes.search" placeholder="Search notes...">
+          <button class="notes-new-btn" id="notes-new-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="notes.new">New note</span>
+          </button>
+        </div>
+        <div class="notes-list" id="notes-list">
+          <div class="empty-state">
+            <div class="empty-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <span class="empty-text" data-i18n="notes.empty">No notes yet</span>
+            <span class="empty-hint" data-i18n="notes.emptyHint">Create your first note</span>
+          </div>
+        </div>
+      </div>
+      <!-- Edit view (hidden by default) -->
+      <div id="notes-edit-view" style="display:none">
+        <div class="notes-edit-header">
+          <button class="notes-back-btn" id="notes-back-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            <span data-i18n="notes.back">Back</span>
+          </button>
+          <button class="notes-delete-btn" id="notes-delete-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span data-i18n="notes.delete">Delete</span>
+          </button>
+        </div>
+        <input type="text" class="note-title-input" id="note-title-input" data-i18n-placeholder="notes.titlePlaceholder" placeholder="Note title...">
+        <textarea class="note-content-input" id="note-content-input" data-i18n-placeholder="notes.contentPlaceholder" placeholder="Write something..."></textarea>
+      </div>
     </div>
 
     <!-- ===== THEMES TAB ===== -->

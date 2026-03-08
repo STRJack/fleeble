@@ -27,6 +27,7 @@ const SOURCE_NAMES = {
   'cursor': 'Cursor',
   'codex': 'Codex',
   'copilot': 'Copilot',
+  'fleeble': 'Fleeble',
   'unknown': 'AI'
 };
 
@@ -45,6 +46,18 @@ segBtns.forEach(btn => {
     panels.forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById(`panel-${btn.dataset.tab}`).classList.add('active');
+  });
+});
+
+// ===== Sub-tabs (Timers) =====
+document.querySelectorAll('.sub-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const panel = parent.parentElement;
+    panel.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`subpanel-${btn.dataset.subtab}`).classList.add('active');
   });
 });
 
@@ -200,7 +213,6 @@ claudeBtn.addEventListener('click', async () => {
   await refreshClaudeStatus();
 });
 
-// Hover effect: show "Disconnect" when connected
 claudeBtn.addEventListener('mouseenter', () => {
   if (claudeConnected) claudeBtn.textContent = t('claude.disconnect');
 });
@@ -324,6 +336,12 @@ window.menuAPI.onUpdateState((data) => {
   refreshCodexStatus();
   updateDndUI(data.settings.dnd || false);
   renderLanguagePicker();
+
+  // Load new features data
+  loadClipboardData();
+  loadReminders();
+  loadPomodoroStatus();
+  loadNotes();
 });
 
 window.menuAPI.onNewNotification((entry) => {
@@ -363,7 +381,6 @@ function renderSounds() {
       </div>`;
   }).join('');
 
-  // Click to select
   soundList.querySelectorAll('.sound-item').forEach(item => {
     item.addEventListener('click', (e) => {
       if (e.target.closest('.sound-preview-btn')) return;
@@ -372,12 +389,10 @@ function renderSounds() {
       currentSound = name;
       window.menuAPI.changeSound(name);
       renderSounds();
-      // Also preview the selected sound
       previewSound(soundsData[name].file);
     });
   });
 
-  // Click play to preview
   soundList.querySelectorAll('.sound-preview-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -404,7 +419,6 @@ function applyTheme({ name, vars }) {
   for (const [key, val] of Object.entries(vars)) {
     root.style.setProperty(key, val);
   }
-  // Update active state on cards
   if (themeGrid) {
     themeGrid.querySelectorAll('.theme-card').forEach(card => {
       card.classList.toggle('active', card.dataset.theme === name);
@@ -446,7 +460,6 @@ function renderThemes() {
       if (name === currentTheme) return;
       currentTheme = name;
       window.menuAPI.applyTheme(name);
-      // Update active state immediately
       themeGrid.querySelectorAll('.theme-card').forEach(c => {
         c.classList.toggle('active', c.dataset.theme === name);
       });
@@ -476,7 +489,6 @@ languageList.querySelectorAll('.sound-item').forEach(item => {
     window.menuAPI.changeLanguage(lang);
     setLanguage(lang);
     renderLanguagePicker();
-    // Re-render dynamic content
     renderNotifications(state.history);
     refreshClaudeStatus();
     refreshCursorStatus();
@@ -485,7 +497,6 @@ languageList.querySelectorAll('.sound-item').forEach(item => {
   });
 });
 
-// ===== Language Changed (from main) =====
 window.menuAPI.onLanguageChanged((lang) => {
   setLanguage(lang);
   renderLanguagePicker();
@@ -496,7 +507,6 @@ window.menuAPI.onLanguageChanged((lang) => {
   updateDndUI(isDnd);
 });
 
-// Init language on load
 window.menuAPI.getLanguage().then(lang => {
   setLanguage(lang);
   renderLanguagePicker();
@@ -528,4 +538,376 @@ approvalModeList.querySelectorAll('.sound-item').forEach(item => {
 window.menuAPI.getApprovalMode().then(mode => {
   currentApprovalMode = mode;
   renderApprovalModePicker();
+});
+
+// ==========================================
+// ===== CLIPBOARD TAB =====
+// ==========================================
+
+const clipboardList = document.getElementById('clipboard-list');
+const clipboardOpenBtn = document.getElementById('clipboard-open-btn');
+
+async function loadClipboardData() {
+  const items = await window.menuAPI.getClipboardHistory({ filter: 'all' });
+  renderClipboardList(items ? items.slice(0, 10) : []);
+}
+
+function renderClipboardList(items) {
+  if (!items || !items.length) {
+    clipboardList.innerHTML = `
+      <div class="empty-state small">
+        <span class="empty-text">${esc(t('clipboard.empty'))}</span>
+        <span class="empty-hint">${esc(t('clipboard.emptyHint'))}</span>
+      </div>`;
+    return;
+  }
+
+  clipboardList.innerHTML = items.map(item => {
+    const catLabel = item.category || 'text';
+    if (item.type === 'image') {
+      return `
+        <div class="clip-item" data-id="${item.id}">
+          <span class="clip-category image">${esc(t('clipboard.images'))}</span>
+          ${item.thumbnail ? `<img class="clip-thumb" src="${item.thumbnail}" alt="">` : ''}
+          <span class="clip-time">${timeAgo(item.timestamp)}</span>
+          ${item.pinned ? '<span class="clip-pin">★</span>' : ''}
+        </div>`;
+    }
+    return `
+      <div class="clip-item" data-id="${item.id}">
+        <span class="clip-category ${catLabel}">${esc(catLabel)}</span>
+        <span class="clip-preview">${esc(item.content || '')}</span>
+        <span class="clip-time">${timeAgo(item.timestamp)}</span>
+        ${item.pinned ? '<span class="clip-pin">★</span>' : ''}
+      </div>`;
+  }).join('');
+
+  clipboardList.querySelectorAll('.clip-item').forEach(item => {
+    item.addEventListener('click', () => {
+      window.menuAPI.clipboardCopy(item.dataset.id);
+      // Brief visual feedback
+      item.style.background = 'var(--accent-soft)';
+      setTimeout(() => item.style.background = '', 300);
+    });
+  });
+}
+
+clipboardOpenBtn.addEventListener('click', () => {
+  window.menuAPI.toggleClipboardWindow();
+});
+
+window.menuAPI.onClipboardUpdated((items) => {
+  renderClipboardList(items);
+});
+
+// ==========================================
+// ===== REMINDERS =====
+// ==========================================
+
+const reminderInput = document.getElementById('reminder-input');
+const reminderList = document.getElementById('reminder-list');
+const durBtns = document.querySelectorAll('.dur-btn');
+let selectedDuration = 1800000; // 30min default
+let reminderCountdownInterval = null;
+let activeRemindersData = [];
+
+durBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    durBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedDuration = parseInt(btn.dataset.delay);
+  });
+});
+
+reminderInput.addEventListener('keydown', async (e) => {
+  if (e.key === 'Enter' && reminderInput.value.trim()) {
+    await window.menuAPI.addReminder({ message: reminderInput.value.trim(), delayMs: selectedDuration });
+    reminderInput.value = '';
+  }
+});
+
+async function loadReminders() {
+  activeRemindersData = await window.menuAPI.getActiveReminders();
+  renderReminders();
+}
+
+function renderReminders() {
+  if (!activeRemindersData || !activeRemindersData.length) {
+    reminderList.innerHTML = `
+      <div class="empty-state small">
+        <span class="empty-text">${esc(t('timers.noReminders'))}</span>
+      </div>`;
+    stopReminderCountdown();
+    return;
+  }
+
+  reminderList.innerHTML = activeRemindersData.map(r => `
+    <div class="reminder-item" data-id="${r.id}">
+      <span class="reminder-msg">${esc(r.message)}</span>
+      <span class="reminder-countdown" data-fire-at="${r.fireAt}"></span>
+      <button class="reminder-delete-btn" data-id="${r.id}" title="${t('timers.delete')}">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  `).join('');
+
+  reminderList.querySelectorAll('.reminder-delete-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.menuAPI.deleteReminder(btn.dataset.id);
+    });
+  });
+
+  startReminderCountdown();
+}
+
+function startReminderCountdown() {
+  stopReminderCountdown();
+  updateReminderCountdowns();
+  reminderCountdownInterval = setInterval(updateReminderCountdowns, 1000);
+}
+
+function stopReminderCountdown() {
+  if (reminderCountdownInterval) {
+    clearInterval(reminderCountdownInterval);
+    reminderCountdownInterval = null;
+  }
+}
+
+function updateReminderCountdowns() {
+  const countdowns = reminderList.querySelectorAll('.reminder-countdown');
+  countdowns.forEach(el => {
+    const fireAt = parseInt(el.dataset.fireAt);
+    const remaining = Math.max(0, fireAt - Date.now());
+    el.textContent = formatCountdown(remaining);
+  });
+}
+
+function formatCountdown(ms) {
+  const totalSec = Math.ceil(ms / 1000);
+  const min = Math.floor(totalSec / 60);
+  const sec = totalSec % 60;
+  if (min >= 60) {
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    return `${h}h${m > 0 ? String(m).padStart(2, '0') + 'm' : ''}`;
+  }
+  return `${min}:${String(sec).padStart(2, '0')}`;
+}
+
+window.menuAPI.onRemindersUpdated((reminders) => {
+  activeRemindersData = reminders;
+  renderReminders();
+});
+
+// ==========================================
+// ===== POMODORO =====
+// ==========================================
+
+const pomoRing = document.getElementById('pomo-ring');
+const pomoTime = document.getElementById('pomo-time');
+const pomoPhase = document.getElementById('pomo-phase');
+const pomoCycles = document.getElementById('pomo-cycles');
+const pomoMainBtn = document.getElementById('pomo-main-btn');
+const pomoResetBtn = document.getElementById('pomo-reset-btn');
+const pomoSkipBtn = document.getElementById('pomo-skip-btn');
+
+const RING_CIRCUMFERENCE = 2 * Math.PI * 52; // ~326.726
+let pomodoroData = { phase: 'idle', remainingMs: 0, totalMs: 0, cycleCount: 0, totalCycles: 4, isPaused: false };
+let pomodoroInterval = null;
+
+async function loadPomodoroStatus() {
+  pomodoroData = await window.menuAPI.getPomodoroStatus();
+  renderPomodoro();
+}
+
+function renderPomodoro() {
+  const { phase, remainingMs, totalMs, cycleCount, totalCycles, isPaused } = pomodoroData;
+
+  // Time display
+  const totalSec = Math.ceil(remainingMs / 1000);
+  const min = Math.floor(totalSec / 60);
+  const sec = totalSec % 60;
+  pomoTime.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+
+  // Phase label
+  const phaseKeys = { idle: 'pomodoro.idle', focus: 'pomodoro.focus', 'short-break': 'pomodoro.shortBreak', 'long-break': 'pomodoro.longBreak' };
+  pomoPhase.textContent = t(phaseKeys[phase] || 'pomodoro.idle');
+
+  // Ring progress
+  if (phase === 'idle' || totalMs === 0) {
+    pomoRing.style.strokeDashoffset = '0';
+  } else {
+    const progress = 1 - (remainingMs / totalMs);
+    pomoRing.style.strokeDashoffset = String(progress * RING_CIRCUMFERENCE);
+  }
+
+  // Cycle dots
+  const dots = pomoCycles.querySelectorAll('.cycle-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('completed', i < cycleCount);
+  });
+
+  // Button states
+  if (phase === 'idle') {
+    pomoMainBtn.textContent = t('pomodoro.start');
+    pomoMainBtn.onclick = () => window.menuAPI.pomodoroStart();
+  } else if (isPaused) {
+    pomoMainBtn.textContent = t('pomodoro.resume');
+    pomoMainBtn.onclick = () => window.menuAPI.pomodoroResume();
+  } else {
+    pomoMainBtn.textContent = t('pomodoro.pause');
+    pomoMainBtn.onclick = () => window.menuAPI.pomodoroPause();
+  }
+
+  // Start/stop local countdown for smooth updates
+  if (phase !== 'idle' && !isPaused) {
+    startPomodoroCountdown();
+  } else {
+    stopPomodoroCountdown();
+  }
+}
+
+function startPomodoroCountdown() {
+  stopPomodoroCountdown();
+  pomodoroInterval = setInterval(() => {
+    if (pomodoroData.remainingMs > 0) {
+      pomodoroData.remainingMs = Math.max(0, pomodoroData.remainingMs - 1000);
+      renderPomodoro();
+    }
+  }, 1000);
+}
+
+function stopPomodoroCountdown() {
+  if (pomodoroInterval) {
+    clearInterval(pomodoroInterval);
+    pomodoroInterval = null;
+  }
+}
+
+pomoResetBtn.addEventListener('click', () => window.menuAPI.pomodoroReset());
+pomoSkipBtn.addEventListener('click', () => window.menuAPI.pomodoroSkip());
+
+window.menuAPI.onPomodoroUpdated((data) => {
+  pomodoroData = data;
+  renderPomodoro();
+});
+
+// ==========================================
+// ===== NOTES =====
+// ==========================================
+
+const notesListView = document.getElementById('notes-list-view');
+const notesEditView = document.getElementById('notes-edit-view');
+const notesSearch = document.getElementById('notes-search');
+const notesList = document.getElementById('notes-list');
+const notesNewBtn = document.getElementById('notes-new-btn');
+const notesBackBtn = document.getElementById('notes-back-btn');
+const notesDeleteBtn = document.getElementById('notes-delete-btn');
+const noteTitleInput = document.getElementById('note-title-input');
+const noteContentInput = document.getElementById('note-content-input');
+
+let notesData = [];
+let editingNoteId = null;
+let autoSaveTimeout = null;
+
+async function loadNotes() {
+  notesData = await window.menuAPI.getNotes();
+  renderNotesList();
+}
+
+function renderNotesList() {
+  if (!notesData || !notesData.length) {
+    notesList.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <span class="empty-text">${esc(t('notes.empty'))}</span>
+        <span class="empty-hint">${esc(t('notes.emptyHint'))}</span>
+      </div>`;
+    return;
+  }
+
+  notesList.innerHTML = notesData.map(n => {
+    const title = n.title || t('notes.untitled');
+    const preview = (n.content || '').slice(0, 60);
+    const date = new Date(n.updated).toLocaleDateString();
+    return `
+      <div class="note-card" data-id="${n.id}">
+        <div class="note-card-title">${esc(title)}</div>
+        ${preview ? `<div class="note-card-preview">${esc(preview)}</div>` : ''}
+        <div class="note-card-date">${date}</div>
+      </div>`;
+  }).join('');
+
+  notesList.querySelectorAll('.note-card').forEach(card => {
+    card.addEventListener('click', () => openNoteEditor(card.dataset.id));
+  });
+}
+
+function openNoteEditor(noteId) {
+  const note = notesData.find(n => n.id === noteId);
+  if (!note) return;
+  editingNoteId = noteId;
+  noteTitleInput.value = note.title || '';
+  noteContentInput.value = note.content || '';
+  notesListView.style.display = 'none';
+  notesEditView.style.display = 'block';
+}
+
+function closeNoteEditor() {
+  if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
+  editingNoteId = null;
+  notesEditView.style.display = 'none';
+  notesListView.style.display = 'block';
+  loadNotes();
+}
+
+notesNewBtn.addEventListener('click', async () => {
+  const note = await window.menuAPI.createNote({ title: '', content: '' });
+  if (note) {
+    notesData.unshift(note);
+    openNoteEditor(note.id);
+  }
+});
+
+notesBackBtn.addEventListener('click', closeNoteEditor);
+
+notesDeleteBtn.addEventListener('click', () => {
+  if (editingNoteId) {
+    window.menuAPI.deleteNote(editingNoteId);
+    closeNoteEditor();
+  }
+});
+
+function scheduleAutoSave() {
+  if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
+  autoSaveTimeout = setTimeout(() => {
+    if (editingNoteId) {
+      window.menuAPI.updateNote({
+        id: editingNoteId,
+        title: noteTitleInput.value,
+        content: noteContentInput.value
+      });
+    }
+  }, 1000);
+}
+
+noteTitleInput.addEventListener('input', scheduleAutoSave);
+noteContentInput.addEventListener('input', scheduleAutoSave);
+
+let notesSearchTimeout = null;
+notesSearch.addEventListener('input', () => {
+  if (notesSearchTimeout) clearTimeout(notesSearchTimeout);
+  notesSearchTimeout = setTimeout(async () => {
+    const query = notesSearch.value.trim();
+    notesData = await window.menuAPI.getNotes(query || undefined);
+    renderNotesList();
+  }, 300);
+});
+
+window.menuAPI.onNotesUpdated((notes) => {
+  notesData = notes;
+  if (!editingNoteId) renderNotesList();
 });

@@ -36,7 +36,7 @@ export default function HeroSection() {
             Fleeble
           </span>
           .<br />
-          Your AI&apos;s<br />new best friend.
+          Your desktop<br />companion.
         </motion.h1>
 
         <motion.p
@@ -46,7 +46,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          Approve actions, answer questions & stay in the loop with your AI coding tools — without switching windows.
+          AI notifications, clipboard history, pomodoro timer, reminders & quick notes — all from a cute desktop mascot.
         </motion.p>
 
         <motion.div

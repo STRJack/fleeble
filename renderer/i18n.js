@@ -22,6 +22,9 @@ const TRANSLATIONS = {
 
     // Menu - Tabs
     'tab.activity': 'Activity',
+    'tab.clipboard': 'Clipboard',
+    'tab.timers': 'Timers',
+    'tab.notes': 'Notes',
     'tab.themes': 'Themes',
     'tab.config': 'Config',
 
@@ -89,6 +92,58 @@ const TRANSLATIONS = {
 
     // Test notification
     'test.message': "Hey! Just checking in — everything's working great!",
+
+    // Clipboard
+    'clipboard.title': 'Clipboard History',
+    'clipboard.empty': 'Nothing copied yet',
+    'clipboard.emptyHint': 'Copy something to see it here',
+    'clipboard.search': 'Search clipboard...',
+    'clipboard.all': 'All',
+    'clipboard.urls': 'URLs',
+    'clipboard.code': 'Code',
+    'clipboard.text': 'Text',
+    'clipboard.images': 'Images',
+    'clipboard.copied': 'Copied!',
+    'clipboard.openFull': 'Open full clipboard',
+    'clipboard.shortcut': 'Cmd+Shift+V',
+
+    // Timers / Reminders
+    'timers.title': 'Timers',
+    'timers.reminders': 'Reminders',
+    'timers.pomodoro': 'Pomodoro',
+    'timers.newReminder': 'New reminder...',
+    'timers.reminderPlaceholder': 'Remind me to...',
+    'timers.5min': '5min',
+    'timers.15min': '15min',
+    'timers.30min': '30min',
+    'timers.1h': '1h',
+    'timers.noReminders': 'No active reminders',
+    'timers.delete': 'Delete',
+    'timers.snooze': 'Snooze',
+
+    // Pomodoro
+    'pomodoro.focus': 'Focus',
+    'pomodoro.shortBreak': 'Short Break',
+    'pomodoro.longBreak': 'Long Break',
+    'pomodoro.idle': 'Ready',
+    'pomodoro.start': 'Start',
+    'pomodoro.pause': 'Pause',
+    'pomodoro.resume': 'Resume',
+    'pomodoro.reset': 'Reset',
+    'pomodoro.skip': 'Skip',
+    'pomodoro.cycle': 'Cycle',
+
+    // Notes
+    'notes.title': 'Notes',
+    'notes.new': 'New note',
+    'notes.search': 'Search notes...',
+    'notes.empty': 'No notes yet',
+    'notes.emptyHint': 'Create your first note',
+    'notes.untitled': 'Untitled',
+    'notes.back': 'Back',
+    'notes.delete': 'Delete',
+    'notes.titlePlaceholder': 'Note title...',
+    'notes.contentPlaceholder': 'Write something...',
   },
   fr: {
     // Bubble - Type labels
@@ -113,6 +168,9 @@ const TRANSLATIONS = {
 
     // Menu - Tabs
     'tab.activity': 'Activité',
+    'tab.clipboard': 'Presse-papiers',
+    'tab.timers': 'Minuteurs',
+    'tab.notes': 'Notes',
     'tab.themes': 'Thèmes',
     'tab.config': 'Config',
 
@@ -180,6 +238,58 @@ const TRANSLATIONS = {
 
     // Test notification
     'test.message': "Salut ! Tout fonctionne parfaitement !",
+
+    // Clipboard
+    'clipboard.title': 'Presse-papiers',
+    'clipboard.empty': 'Rien copié pour le moment',
+    'clipboard.emptyHint': 'Copiez quelque chose pour le voir ici',
+    'clipboard.search': 'Rechercher...',
+    'clipboard.all': 'Tout',
+    'clipboard.urls': 'URLs',
+    'clipboard.code': 'Code',
+    'clipboard.text': 'Texte',
+    'clipboard.images': 'Images',
+    'clipboard.copied': 'Copié !',
+    'clipboard.openFull': 'Ouvrir le presse-papiers',
+    'clipboard.shortcut': 'Cmd+Shift+V',
+
+    // Timers / Reminders
+    'timers.title': 'Minuteurs',
+    'timers.reminders': 'Rappels',
+    'timers.pomodoro': 'Pomodoro',
+    'timers.newReminder': 'Nouveau rappel...',
+    'timers.reminderPlaceholder': 'Me rappeler de...',
+    'timers.5min': '5min',
+    'timers.15min': '15min',
+    'timers.30min': '30min',
+    'timers.1h': '1h',
+    'timers.noReminders': 'Aucun rappel actif',
+    'timers.delete': 'Supprimer',
+    'timers.snooze': 'Reporter',
+
+    // Pomodoro
+    'pomodoro.focus': 'Concentration',
+    'pomodoro.shortBreak': 'Pause courte',
+    'pomodoro.longBreak': 'Longue pause',
+    'pomodoro.idle': 'Prêt',
+    'pomodoro.start': 'Démarrer',
+    'pomodoro.pause': 'Pause',
+    'pomodoro.resume': 'Reprendre',
+    'pomodoro.reset': 'Réinitialiser',
+    'pomodoro.skip': 'Passer',
+    'pomodoro.cycle': 'Cycle',
+
+    // Notes
+    'notes.title': 'Notes',
+    'notes.new': 'Nouvelle note',
+    'notes.search': 'Rechercher...',
+    'notes.empty': 'Aucune note',
+    'notes.emptyHint': 'Créez votre première note',
+    'notes.untitled': 'Sans titre',
+    'notes.back': 'Retour',
+    'notes.delete': 'Supprimer',
+    'notes.titlePlaceholder': 'Titre de la note...',
+    'notes.contentPlaceholder': 'Écrivez quelque chose...',
   }
 };
 

@@ -8,6 +8,7 @@ const SOURCE_NAMES = {
   'cursor': 'Cursor',
   'codex': 'Codex',
   'copilot': 'Copilot',
+  'fleeble': 'Fleeble',
   'unknown': 'AI'
 };
 

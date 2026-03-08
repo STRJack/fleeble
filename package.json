@@ -1,7 +1,7 @@
 {
   "name": "fleeble",
-  "version": "1.0.0",
-  "description": "Cute mascot that appears when AI tools need human intervention",
+  "version": "1.1.0",
+  "description": "Desktop companion — AI notifications, clipboard manager, pomodoro, reminders & notes",
   "main": "main.js",
   "bin": {
     "mascot": "./cli.js"
@@ -29,10 +29,12 @@
     "afterSign": "scripts/notarize.js",
     "files": [
       "main.js",
+      "main/**/*",
       "cli.js",
       "preload.js",
       "preload-bubble.js",
       "preload-menu.js",
+      "preload-clipboard.js",
       "renderer/**/*",
       "hooks/**/*"
     ],

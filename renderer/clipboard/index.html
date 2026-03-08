@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="clipboard-window">
+    <!-- Header -->
+    <div class="cb-header">
+      <div class="cb-title" data-i18n="clipboard.title">Clipboard History</div>
+      <button class="cb-close-btn" id="close-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Search -->
+    <div class="cb-search-row">
+      <input type="text" class="cb-search" id="search-input" data-i18n-placeholder="clipboard.search" placeholder="Search clipboard...">
+    </div>
+
+    <!-- Filters -->
+    <div class="cb-filters">
+      <button class="cb-filter active" data-filter="all" data-i18n="clipboard.all">All</button>
+      <button class="cb-filter" data-filter="url" data-i18n="clipboard.urls">URLs</button>
+      <button class="cb-filter" data-filter="code" data-i18n="clipboard.code">Code</button>
+      <button class="cb-filter" data-filter="text" data-i18n="clipboard.text">Text</button>
+      <button class="cb-filter" data-filter="image" data-i18n="clipboard.images">Images</button>
+    </div>
+
+    <!-- List -->
+    <div class="cb-list" id="clipboard-list"></div>
+
+    <!-- Toast -->
+    <div class="cb-toast" id="toast" data-i18n="clipboard.copied">Copied!</div>
+  </div>
+
+  <script src="../i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
