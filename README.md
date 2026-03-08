@@ -1,22 +1,40 @@
 # Fleeble
 
-A playful desktop mascot that bridges the gap between AI coding tools and you. Fleeble pops up when your AI needs attention — approve actions, answer questions, and stay in the loop without switching windows.
+A desktop notification companion for AI coding tools. Fleeble pops up as an animated mascot when Claude Code, Cursor, or Codex need your attention — approve actions, answer questions, and stay in the loop without leaving your workflow.
 
 ![macOS](https://img.shields.io/badge/macOS-Apple%20Silicon-8b5cf6?style=flat-square&logo=apple&logoColor=white)
 ![Electron](https://img.shields.io/badge/Electron-33-47848F?style=flat-square&logo=electron&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
-## What is Fleeble?
+## How it works
 
-When AI tools like Claude Code, Cursor, or Codex need human input — a permission to run a command, a question to answer, an error to review — Fleeble appears as an animated mascot on your screen with the notification. You can approve, deny, or respond directly from the bubble without touching your terminal.
+Fleeble runs a local HTTP server on `127.0.0.1:7777`. AI tools send notifications via shell hooks, and Fleeble renders them as interactive floating bubbles on your desktop. You can approve, deny, or respond directly from the bubble — no terminal switching needed.
 
-### Supported AI tools
+### Two approval modes
 
-| Tool | Hook | Mode |
-|------|------|------|
-| Claude Code | `hooks/claude-code-hook.sh` | Manage (approve/deny) + Notify |
-| Cursor | `hooks/cursor-hook.sh` | Notify |
-| Codex | `hooks/codex-hook.py` | Notify |
+- **Manage** — Fleeble intercepts tool requests (Bash, Edit, Write, etc.) and waits for your approval before the AI proceeds. The hook blocks until you Allow or Deny from the bubble.
+- **Notify** — Fire-and-forget. Fleeble shows the notification with auto-dismiss, and the AI tool handles approvals in the terminal as usual.
+
+## Integrations
+
+| Tool | Approval | Notify | Setup |
+|------|----------|--------|-------|
+| **Claude Code** | Bash, Edit, Write, NotebookEdit, AskUserQuestion | All notifications | One-click from Settings |
+| **Cursor** | Shell commands | Stop events | One-click from Settings |
+| **Codex CLI** | — | Agent turn summaries | One-click from Settings |
+
+Hooks are installed automatically via the Settings menu — no manual config needed.
+
+## Features
+
+- **Interactive bubbles** — Markdown-rendered notifications with option buttons, free-text replies, and keyboard shortcuts (1-9, Escape)
+- **Animated mascot** — Draggable character that reacts to notification types (action, error, info, question, approval)
+- **Smart grouping** — Notifications from the same project auto-collapse with counters when 3+ stack up
+- **5 themes** — Dark, Light, Midnight, Rose, Ocean — switch instantly from the tray menu
+- **8 notification sounds** — Pick your sound or mute with Do Not Disturb
+- **Multi-display** — Choose which screen shows notifications
+- **Notification history** — Last 50 notifications accessible from the tray menu
+- **Bilingual** — English and French, auto-detected from system locale
 
 ## Install
 
@@ -30,19 +48,13 @@ Grab the latest `.dmg` from the [Releases](https://github.com/STRJack/fleeble/re
 git clone https://github.com/STRJack/fleeble.git
 cd fleeble
 npm install
-npm run build
-# DMG output in dist/
+npm run build        # unsigned
+npm run build:signed # signed + notarized (requires Apple credentials in .env)
 ```
 
-## Usage
+## CLI
 
-### Start Fleeble
-
-```bash
-npm start
-```
-
-### Send notifications via CLI
+Fleeble includes a CLI to send notifications from any script:
 
 ```bash
 # Simple message
@@ -58,48 +70,25 @@ echo "Build complete" | mascot
 mascot --dismiss
 ```
 
-### CLI options
-
 | Flag | Description |
 |------|-------------|
-| `-s, --source <name>` | Source AI (`claude-code`, `cursor`, `codex`) |
-| `-t, --type <type>` | Message type (`action`, `error`, `info`, `question`, `approval`) |
+| `-s, --source <name>` | Source (`claude-code`, `cursor`, `codex`) |
+| `-t, --type <type>` | Type (`action`, `error`, `info`, `question`, `approval`) |
 | `-d, --dismiss` | Dismiss the current notification |
-
-### Hook setup
-
-**Claude Code** — Add to `~/.claude/settings.json`:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "",
-        "hooks": [{ "type": "command", "command": "/path/to/fleeble/hooks/claude-code-hook.sh" }]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [{ "type": "command", "command": "/path/to/fleeble/hooks/claude-code-hook.sh" }]
-      }
-    ]
-  }
-}
-```
 
 ## Architecture
 
 ```
 fleeble/
-├── main.js              # Electron main process + local HTTP server (port 7777)
+├── main.js              # Electron main process + HTTP server (port 7777)
 ├── cli.js               # CLI to send notifications
-├── hooks/               # AI tool integration hooks
+├── hooks/               # Shell/Python hooks for AI tool integrations
 ├── renderer/
 │   ├── bubble/          # Notification bubble UI
-│   └── menu/            # Tray menu UI
-└── build/               # App icons
+│   └── menu/            # Tray menu (activity, themes, settings)
+└── build/               # App icons & entitlements
 ```
 
-Fleeble runs a local HTTP server on `127.0.0.1:7777`. Hooks send POST requests to `/notify`, and the Electron app renders them as animated bubbles.
+## License
+
+MIT

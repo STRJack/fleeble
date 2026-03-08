@@ -36,7 +36,7 @@ export default function HeroSection() {
             Fleeble
           </span>
           .<br />
-          Your clipboard&apos;s<br />new best friend.
+          Your AI&apos;s<br />new best friend.
         </motion.h1>
 
         <motion.p
@@ -46,7 +46,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          Copy, organize & find anything you&apos;ve ever copied. Smart, fast, and ridiculously fun.
+          Approve actions, answer questions & stay in the loop with your AI coding tools — without switching windows.
         </motion.p>
 
         <motion.div

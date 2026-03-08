@@ -16,7 +16,7 @@ const integrations = [
   },
   {
     name: 'Cursor',
-    desc: 'Get notified when Cursor needs your input. Answer inline questions right from the bubble.',
+    desc: 'Approve or deny shell commands and get notified when Cursor needs your attention.',
     iconBg: 'linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 102, 255, 0.08))',
     iconColor: '#3b8eff',
     icon: (
@@ -27,7 +27,7 @@ const integrations = [
   },
   {
     name: 'Codex CLI',
-    desc: 'Track refactoring progress and get real-time status updates from OpenAI Codex.',
+    desc: 'Get notified when Codex finishes an agent turn with a summary of what it did.',
     iconBg: 'linear-gradient(135deg, rgba(16, 163, 127, 0.2), rgba(16, 163, 127, 0.08))',
     iconColor: '#10a37f',
     icon: (
