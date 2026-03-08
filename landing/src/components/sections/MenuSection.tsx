@@ -30,7 +30,7 @@ export default function MenuSection() {
             </span>
           </h2>
           <p className="text-xl max-w-xl mx-auto leading-relaxed" style={{ color: 'rgba(var(--card-text-rgb), 0.5)' }}>
-            A beautiful tray menu to manage all your AI notifications, themes, and integrations in one place.
+            Your clipboard, timers, notes, themes and integrations — all in one beautiful tray menu.
           </p>
         </motion.div>
 

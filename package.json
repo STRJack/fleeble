@@ -1,6 +1,6 @@
 {
   "name": "fleeble",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Desktop companion — AI notifications, clipboard manager, pomodoro, reminders & notes",
   "main": "main.js",
   "bin": {
@@ -16,6 +16,11 @@
   "build": {
     "appId": "com.fleeble.app",
     "productName": "Fleeble",
+    "publish": [{
+      "provider": "github",
+      "owner": "STRJack",
+      "repo": "fleeble"
+    }],
     "mac": {
       "category": "public.app-category.developer-tools",
       "icon": "build/icon.icns",
@@ -47,5 +52,8 @@
     "dotenv": "^17.3.1",
     "electron": "^33.0.0",
     "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.3"
   }
 }

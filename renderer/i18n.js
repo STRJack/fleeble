@@ -144,6 +144,18 @@ const TRANSLATIONS = {
     'notes.delete': 'Delete',
     'notes.titlePlaceholder': 'Note title...',
     'notes.contentPlaceholder': 'Write something...',
+
+    // Updates
+    'update.title': 'Updates',
+    'update.checking': 'Checking...',
+    'update.upToDate': 'Up to date',
+    'update.available': 'Update available',
+    'update.downloading': 'Downloading...',
+    'update.ready': 'Ready to install',
+    'update.check': 'Check for updates',
+    'update.download': 'Download',
+    'update.install': 'Install & Restart',
+    'update.error': 'Error',
   },
   fr: {
     // Bubble - Type labels
@@ -290,6 +302,18 @@ const TRANSLATIONS = {
     'notes.delete': 'Supprimer',
     'notes.titlePlaceholder': 'Titre de la note...',
     'notes.contentPlaceholder': 'Écrivez quelque chose...',
+
+    // Updates
+    'update.title': 'Mises à jour',
+    'update.checking': 'Vérification...',
+    'update.upToDate': 'À jour',
+    'update.available': 'Mise à jour disponible',
+    'update.downloading': 'Téléchargement...',
+    'update.ready': 'Prêt à installer',
+    'update.check': 'Vérifier les mises à jour',
+    'update.download': 'Télécharger',
+    'update.install': 'Installer et redémarrer',
+    'update.error': 'Erreur',
   }
 };
 

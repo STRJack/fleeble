@@ -75,5 +75,12 @@ contextBridge.exposeInMainWorld('menuAPI', {
   clipboardPin: (id) => ipcRenderer.send('clipboard-pin', id),
   clipboardDelete: (id) => ipcRenderer.send('clipboard-delete', id),
   toggleClipboardWindow: () => ipcRenderer.send('toggle-clipboard-window'),
-  onClipboardUpdated: (cb) => ipcRenderer.on('clipboard-updated', (_, d) => cb(d))
+  onClipboardUpdated: (cb) => ipcRenderer.on('clipboard-updated', (_, d) => cb(d)),
+
+  // Updater
+  updaterCheck: () => ipcRenderer.invoke('updater:check'),
+  updaterDownload: () => ipcRenderer.invoke('updater:download'),
+  updaterInstall: () => ipcRenderer.send('updater:install'),
+  updaterGetStatus: () => ipcRenderer.invoke('updater:get-status'),
+  onUpdaterStatus: (cb) => ipcRenderer.on('updater-status', (_, d) => cb(d))
 });

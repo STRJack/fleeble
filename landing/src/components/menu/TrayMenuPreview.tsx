@@ -4,10 +4,13 @@ import { useState } from 'react';
 import TrayMenuHeader from './TrayMenuHeader';
 import TrayMenuTabs from './TrayMenuTabs';
 import TrayMenuActivity from './TrayMenuActivity';
+import TrayMenuClipboard from './TrayMenuClipboard';
+import TrayMenuTimers from './TrayMenuTimers';
+import TrayMenuNotes from './TrayMenuNotes';
 import TrayMenuThemes from './TrayMenuThemes';
 import TrayMenuConfig from './TrayMenuConfig';
 
-type TabName = 'activity' | 'themes' | 'config';
+type TabName = 'activity' | 'clipboard' | 'timers' | 'notes' | 'themes' | 'config';
 
 export default function TrayMenuPreview() {
   const [activeTab, setActiveTab] = useState<TabName>('activity');
@@ -45,6 +48,9 @@ export default function TrayMenuPreview() {
         <TrayMenuTabs activeTab={activeTab} onTabChange={setActiveTab} />
         <div style={{ padding: '12px 16px', maxHeight: '320px', overflowY: 'auto' }}>
           {activeTab === 'activity' && <TrayMenuActivity />}
+          {activeTab === 'clipboard' && <TrayMenuClipboard />}
+          {activeTab === 'timers' && <TrayMenuTimers />}
+          {activeTab === 'notes' && <TrayMenuNotes />}
           {activeTab === 'themes' && <TrayMenuThemes />}
           {activeTab === 'config' && <TrayMenuConfig />}
         </div>
@@ -60,7 +66,7 @@ export default function TrayMenuPreview() {
           <div className="flex items-center" style={{ gap: '6px', fontSize: '10px', color: '#5e596e', fontFamily: "'SF Mono', 'Menlo', monospace" }}>
             <span>Fleeble</span>
             <span style={{ opacity: 0.4 }}>|</span>
-            <span>v1.0.0</span>
+            <span>v1.2.0</span>
           </div>
           <button
             className="flex items-center cursor-pointer font-semibold border-none bg-transparent transition-all duration-150"

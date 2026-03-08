@@ -911,3 +911,95 @@ window.menuAPI.onNotesUpdated((notes) => {
   notesData = notes;
   if (!editingNoteId) renderNotesList();
 });
+
+// ==========================================
+// ===== AUTO-UPDATER =====
+// ==========================================
+
+const updateSection = document.getElementById('update-section');
+const updateCurrentVersion = document.getElementById('update-current-version');
+const updateStatus = document.getElementById('update-status');
+const updateProgressWrap = document.getElementById('update-progress-wrap');
+const updateProgressFill = document.getElementById('update-progress-fill');
+const updateProgressText = document.getElementById('update-progress-text');
+const updateBtn = document.getElementById('update-btn');
+
+let updaterState = { status: 'idle', version: null, progress: 0, error: null };
+
+// Set current version from package
+updateCurrentVersion.textContent = 'v1.2.0';
+
+function renderUpdater(s) {
+  updaterState = s;
+  updateStatus.className = 'update-status';
+  updateProgressWrap.style.display = 'none';
+
+  switch (s.status) {
+    case 'checking':
+      updateStatus.textContent = t('update.checking');
+      updateBtn.textContent = t('update.check');
+      updateBtn.disabled = true;
+      updateBtn.className = 'update-btn';
+      break;
+    case 'up-to-date':
+      updateStatus.textContent = t('update.upToDate');
+      updateBtn.textContent = t('update.check');
+      updateBtn.disabled = false;
+      updateBtn.className = 'update-btn';
+      break;
+    case 'available':
+      updateStatus.textContent = `${t('update.available')} v${s.version}`;
+      updateStatus.classList.add('available');
+      updateBtn.textContent = t('update.download');
+      updateBtn.disabled = false;
+      updateBtn.className = 'update-btn primary';
+      break;
+    case 'downloading':
+      updateStatus.textContent = `${t('update.downloading')} ${s.progress}%`;
+      updateStatus.classList.add('available');
+      updateProgressWrap.style.display = 'flex';
+      updateProgressFill.style.width = `${s.progress}%`;
+      updateProgressText.textContent = `${s.progress}%`;
+      updateBtn.textContent = t('update.downloading');
+      updateBtn.disabled = true;
+      updateBtn.className = 'update-btn';
+      break;
+    case 'ready':
+      updateStatus.textContent = t('update.ready');
+      updateStatus.classList.add('ready');
+      updateBtn.textContent = t('update.install');
+      updateBtn.disabled = false;
+      updateBtn.className = 'update-btn success';
+      break;
+    case 'error':
+      updateStatus.textContent = `${t('update.error')}: ${s.error || ''}`;
+      updateStatus.classList.add('error');
+      updateBtn.textContent = t('update.check');
+      updateBtn.disabled = false;
+      updateBtn.className = 'update-btn';
+      break;
+    default:
+      updateStatus.textContent = t('update.upToDate');
+      updateBtn.textContent = t('update.check');
+      updateBtn.disabled = false;
+      updateBtn.className = 'update-btn';
+  }
+}
+
+updateBtn.addEventListener('click', async () => {
+  switch (updaterState.status) {
+    case 'available':
+      await window.menuAPI.updaterDownload();
+      break;
+    case 'ready':
+      window.menuAPI.updaterInstall();
+      break;
+    default:
+      await window.menuAPI.updaterCheck();
+  }
+});
+
+window.menuAPI.onUpdaterStatus(renderUpdater);
+
+// Load initial status
+window.menuAPI.updaterGetStatus().then(renderUpdater);

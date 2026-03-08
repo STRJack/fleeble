@@ -9,6 +9,7 @@ const { registerIntegrationHandlers } = require('./main/integrations');
 const { loadReminders, registerTimerHandlers } = require('./main/timers');
 const { loadNotes, registerNoteHandlers } = require('./main/notes');
 const { loadClipboard, startPolling, stopPolling, registerClipboardHandlers } = require('./main/clipboard-manager');
+const { initUpdater } = require('./main/updater');
 
 // ===== App Lifecycle =====
 
@@ -36,6 +37,9 @@ app.whenReady().then(() => {
   // Start services
   server.startServer(showMascot, hideAllBubbles);
   startPolling();
+
+  // Auto-updater (checks after 10s delay)
+  initUpdater(windows.getMenuWindow);
 
   // Hide dock on macOS
   if (process.platform === 'darwin') app.dock.hide();
