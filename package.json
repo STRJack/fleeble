@@ -21,6 +21,7 @@
       "owner": "STRJack",
       "repo": "fleeble"
     }],
+    "afterSign": "build/afterSign.js",
     "mac": {
       "category": "public.app-category.developer-tools",
       "icon": "build/icon.icns",
@@ -29,7 +30,8 @@
       "gatekeeperAssess": false,
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist",
-      "notarize": false
+      "notarize": false,
+      "signIgnore": []
     },
     "files": [
       "main.js",

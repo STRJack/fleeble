@@ -55,7 +55,10 @@ function readCursorHooks() {
 
 function isCursorConnected() {
   const h = readCursorHooks();
-  return JSON.stringify(h.hooks || {}).includes('cursor-hook.sh');
+  const hooks = h.hooks || {};
+  // Support both flat format (correct) and legacy nested format
+  const str = JSON.stringify(hooks);
+  return str.includes('cursor-hook.sh');
 }
 
 // ===== Codex CLI Integration =====
@@ -142,13 +145,14 @@ function registerIntegrationHandlers() {
       const h = readCursorHooks();
       if (!h.hooks) h.hooks = {};
 
+      // Cursor flat format: { command, type, matcher } directly in array
       if (!h.hooks.preToolUse) h.hooks.preToolUse = [];
-      h.hooks.preToolUse = h.hooks.preToolUse.filter(e => !e.hooks || !e.hooks.some(hh => hh.command && hh.command.includes('cursor-hook.sh')));
-      h.hooks.preToolUse.push({ matcher: 'Shell', hooks: [{ type: 'command', command: hookPath }] });
+      h.hooks.preToolUse = h.hooks.preToolUse.filter(e => !(e.command && e.command.includes('cursor-hook.sh')));
+      h.hooks.preToolUse.push({ type: 'command', command: hookPath, matcher: 'Shell' });
 
       if (!h.hooks.stop) h.hooks.stop = [];
-      h.hooks.stop = h.hooks.stop.filter(e => !e.hooks || !e.hooks.some(hh => hh.command && hh.command.includes('cursor-hook.sh')));
-      h.hooks.stop.push({ matcher: '', hooks: [{ type: 'command', command: hookPath }] });
+      h.hooks.stop = h.hooks.stop.filter(e => !(e.command && e.command.includes('cursor-hook.sh')));
+      h.hooks.stop.push({ type: 'command', command: hookPath });
 
       const dir = path.dirname(hooksPath);
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -168,7 +172,12 @@ function registerIntegrationHandlers() {
 
       for (const key of ['preToolUse', 'stop']) {
         if (h.hooks[key]) {
-          h.hooks[key] = h.hooks[key].filter(e => !e.hooks || !e.hooks.some(hh => hh.command && hh.command.includes('cursor-hook.sh')));
+          // Filter out both flat format and legacy nested format
+          h.hooks[key] = h.hooks[key].filter(e => {
+            if (e.command && e.command.includes('cursor-hook.sh')) return false;
+            if (e.hooks && e.hooks.some(hh => hh.command && hh.command.includes('cursor-hook.sh'))) return false;
+            return true;
+          });
           if (!h.hooks[key].length) delete h.hooks[key];
         }
       }
