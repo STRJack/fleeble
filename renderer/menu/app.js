@@ -927,7 +927,7 @@ const updateBtn = document.getElementById('update-btn');
 let updaterState = { status: 'idle', version: null, progress: 0, error: null };
 
 // Set current version from package
-updateCurrentVersion.textContent = 'v1.2.0';
+updateCurrentVersion.textContent = 'v1.2.1';
 
 function renderUpdater(s) {
   updaterState = s;
