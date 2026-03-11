@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import * as amplitude from '@amplitude/unified';
 import { themes, themeNames } from '@/lib/themes';
 import { ThemeName } from '@/types';
 
@@ -27,6 +28,7 @@ export default function ThemePicker({ currentTheme, onThemeChange }: ThemePicker
   const handleSelect = (name: ThemeName) => {
     const t = themes[name];
     onThemeChange(name);
+    amplitude.track('Theme Changed', { theme: name });
     setFlash(t.flashColor);
     setTimeout(() => setFlash(null), 500);
   };

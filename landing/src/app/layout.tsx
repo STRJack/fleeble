@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import AmplitudeProvider from '../components/AmplitudeProvider';
 import './globals.css';
 
 const SITE_URL = 'https://fleeble.app';
@@ -123,7 +124,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <AmplitudeProvider />
+        {children}
+      </body>
     </html>
   );
 }

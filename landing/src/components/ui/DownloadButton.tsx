@@ -1,5 +1,6 @@
 'use client';
 
+import * as amplitude from '@amplitude/unified';
 import { useGitHubRelease } from '@/hooks/useGitHubRelease';
 
 function formatCount(n: number): string {
@@ -19,6 +20,7 @@ export default function DownloadButton() {
           background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))',
           boxShadow: '0 4px 0 var(--accent-darker), 0 8px 24px rgba(var(--accent-rgb), 0.4)',
         }}
+        onClick={() => amplitude.track('Download Clicked', { version })}
         onMouseEnter={(e) => {
           const el = e.currentTarget;
           el.style.background = 'linear-gradient(135deg, var(--accent-dark), var(--accent-darker))';

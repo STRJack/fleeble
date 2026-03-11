@@ -1,9 +1,12 @@
+import * as amplitude from '@amplitude/unified';
+
 export default function GitHubButton() {
   return (
     <a
       href="https://github.com/STRJack/fleeble"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => amplitude.track('GitHub Clicked', { location: 'hero' })}
       className="inline-flex items-center gap-2 text-sm font-semibold py-2.5 px-5 rounded-lg border transition-all duration-200 hover:scale-105"
       style={{
         color: 'rgba(var(--card-text-rgb), 0.6)',

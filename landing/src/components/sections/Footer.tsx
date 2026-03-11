@@ -1,5 +1,6 @@
 'use client';
 
+import * as amplitude from '@amplitude/unified';
 import { useGitHubRelease } from '@/hooks/useGitHubRelease';
 
 export default function Footer() {
@@ -15,6 +16,7 @@ export default function Footer() {
           href="https://github.com/STRJack/fleeble"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => amplitude.track('GitHub Clicked', { location: 'footer' })}
           className="inline-flex items-center gap-2 text-xs font-semibold transition-colors duration-200"
           style={{ color: '#5e596e' }}
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; }}
